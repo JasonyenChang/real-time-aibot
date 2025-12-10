@@ -1,0 +1,54 @@
+name: Deploy Frontend
+
+# 觸發條件：當 main 分支有 push，且變動發生在 livekit-ai 資料夾內
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'livekit-ai/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+
+      # 如果你是用 pnpm，這裡要多一步安裝 pnpm
+      # - name: Install pnpm
+      #   uses: pnpm/action-setup@v2
+      #   with:
+      #     version: 8
+
+      - name: Install Dependencies
+        working-directory: ./livekit-ai
+        run: npm install
+        # run: pnpm install
+
+      - name: Build
+        working-directory: ./livekit-ai
+        # 記得確認你的 next.config.mjs 有設定 output: 'export'
+        run: npm run build
+        # run: pnpm build
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Deploy to S3
+        # 使用 sync 指令，並加入 --delete 刪除舊檔案
+        run: |
+          aws s3 sync ./livekit-ai/out s3://${{ secrets.S3_BUCKET_NAME }} --delete
+
+      - name: Invalidate CloudFront
+        # 告訴 CDN 清除舊快取，確保使用者看到最新版
+        run: |
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"

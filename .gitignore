@@ -1,0 +1,9 @@
+# .gitignore
+terraform/
+*.tfstate
+*.tfstate.backup
+.env
+*.log
+node_modules/
+dist/
+out/
