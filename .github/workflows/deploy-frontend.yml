@@ -1,9 +1,9 @@
 name: Deploy Frontend
 
-# 觸發條件：當 main 分支有 push，且變動發生在 livekit-ai 資料夾內
+# 觸發條件：當 master 分支有 push，且變動發生在 livekit-ai 資料夾內
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
     paths:
       - 'livekit-ai/**'
 
