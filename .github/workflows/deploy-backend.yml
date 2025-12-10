@@ -3,8 +3,6 @@ name: Deploy Backend
 on:
   push:
     branches: master
-    paths:
-      - 'livekit-token-server/**'
 
 jobs:
   deploy:
