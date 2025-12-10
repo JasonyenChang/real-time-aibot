@@ -95,7 +95,7 @@ export default function Home() {
 
   return (
     <main className="flex flex-col items-center justify-center min-h-screen gap-6 p-6">
-      <h1 className="text-2xl font-bold">AI Voice Conversation (真人語音)</h1>
+      <h1 className="text-2xl font-bold">AI Voice Conversation (AI真人語音聊天)</h1>
 
       {/* Connection Status */}
       <div className="text-lg font-medium">
