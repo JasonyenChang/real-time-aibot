@@ -99,24 +99,24 @@ export default function Home() {
 
       {/* Connection Status */}
       <div className="text-lg font-medium">
-        Status:
+        狀態:
         {status === "connected" && (
-          <span className="text-green-600 ml-2">Connected</span>
+          <span className="text-green-600 ml-2">連線</span>
         )}
         {status === "connecting" && (
-          <span className="text-yellow-600 ml-2">Connecting...</span>
+          <span className="text-yellow-600 ml-2">連線中...</span>
         )}
         {status === "disconnected" && (
-          <span className="text-red-600 ml-2">Disconnected</span>
+          <span className="text-red-600 ml-2">斷線</span>
         )}
         {status === "idle" && (
-          <span className="text-gray-500 ml-2">Idle</span>
+          <span className="text-gray-500 ml-2">閒置</span>
         )}
       </div>
 
       {/* Mic Indicator */}
       <div>
-        Mic:
+        麥克風:
         <span className={micOn ? "text-green-600" : "text-red-600"}>
           {micOn ? " ON" : " OFF"}
         </span>
@@ -134,14 +134,14 @@ export default function Home() {
           onClick={startConversation}
           className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer"
         >
-          Start Conversation
+          開始對話
         </button>
       ) : (
         <button
           onClick={endConversation}
           className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 cursor-pointer"
         >
-          End Conversation
+          結束對話
         </button>
       )}
     </main>
